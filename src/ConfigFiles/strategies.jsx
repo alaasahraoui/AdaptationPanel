@@ -1,17 +1,17 @@
 const strategies=
 [
     {
-      "strategy_id": 1,
+      "strategy_id": 0,
       "name": "Reduce Cognitive Load Strategy",
   
     },
     {
-      "strategy_id": 2,
+      "strategy_id": 1,
       "name": "Redistribution Strategy",
 
     },
     {
-      "strategy_id": 3,
+      "strategy_id": 2,
       "name": "Replacement Strategy",
 
     }
