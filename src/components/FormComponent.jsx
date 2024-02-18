@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo,useEffect } from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import actions from '../ConfigFiles/actions';
 import strategies from '../ConfigFiles/strategies';
@@ -6,7 +6,7 @@ import strategies from '../ConfigFiles/strategies';
 const FormComponent = () => {
   const [selectedStrategy, setSelectedStrategy] = useState('');
   const [selectedAction, setSelectedAction] = useState('');
-
+  const [actionConfig, setActionConfig] = useState(null);
   // useMemo to filter actions based on the selected strategy, optimizing re-renders
   const filteredActions = useMemo(() => actions.filter(action => 
     action.strategyId === parseInt(selectedStrategy, 10)), [actions, selectedStrategy]);
@@ -19,7 +19,27 @@ const FormComponent = () => {
   const handleActionChange = (e) => {
     setSelectedAction(e.target.value);
   };
-
+  useEffect(() => {
+    if (selectedAction) {
+      // Find the action object from the actions array
+      const action = actions.find(a => `${a.actionId}` === selectedAction);
+      if (action && action.configFile !== 'default') {
+        // Dynamically import the configFile
+       
+        import(`../ConfigFiles/${action.configFile}`)
+          .then((config) => {
+            // Assuming the config exports an object or function you want to use
+            console.log('Configuration loaded:', config.default);
+            setActionConfig(config.default); // Save the loaded config if needed
+          })
+          .catch(err => console.error("Failed to load config:", err));
+      } else {
+        // Reset or handle the default configuration case
+        console.log('Loading default configuration or handling missing config.');
+        setActionConfig(null);
+      }
+    }
+  }, [selectedAction]);
   return (
     <div>
       <FormControl fullWidth>
@@ -51,7 +71,7 @@ const FormComponent = () => {
             onChange={handleActionChange}
             displayEmpty
           >
-            
+          
             {filteredActions.map((action) => (
               <MenuItem key={action.actionId} value={action.actionId.toString()}>
                 {action.actionName}

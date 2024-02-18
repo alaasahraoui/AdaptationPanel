@@ -23,7 +23,7 @@ export const action3 = {
     {
       name: 'timeline',
       title: 'Timeline Representation',
-      size: 25,
+      size: 100,
       filters: {
         annotationsActive: [],
       },
