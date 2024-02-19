@@ -18,6 +18,9 @@ const FormComponent = () => {
 
   const handleActionChange = (e) => {
     setSelectedAction(e.target.value);
+  
+    
+
   };
   useEffect(() => {
     if (selectedAction) {
@@ -28,8 +31,21 @@ const FormComponent = () => {
        
         import(`../ConfigFiles/${action.configFile}`)
           .then((config) => {
-            // Assuming the config exports an object or function you want to use
+            // Assuming the config exports an object or function 
             console.log('Configuration loaded:', config.default);
+            // here we send a post request to the server to change the dashboard 
+            // based on the selected action and strategy
+            fetch('http://localhost:4200/server/updateTemplate', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(config.default)
+            });
+//------------------end of the post request to the server-------------------
+
+
+
             setActionConfig(config.default); // Save the loaded config if needed
           })
           .catch(err => console.error("Failed to load config:", err));
