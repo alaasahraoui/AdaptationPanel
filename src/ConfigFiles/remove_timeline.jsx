@@ -1,4 +1,4 @@
-export const action3 = {
+export const action1 = {
   title: 'adaptation_test',
   timewindow: [978289700000, 978310675000],
   datasets: [
@@ -20,73 +20,6 @@ export const action3 = {
     },
   ],
   currentWidgets: [
-    {
-      name: 'timeline',
-      title: 'Timeline Representation',
-      size: 100,
-      filters: {
-        annotationsActive: [],
-      },
-      order: 1,
-      datasets: ['calls'],
-      config: {
-        start: '',
-        end: '',
-        datasetsInfo: [
-          {
-            id: 'calls',
-            labels: [
-              {
-                callees: '',
-              },
-              {
-                callers: '',
-              },
-              {
-                'callers -> callees': '',
-              },
-              {
-                duration: '',
-              },
-            ],
-            legend: [
-              {
-                calls: '#ff8f77',
-              },
-            ],
-            groups: [
-              {
-                callers: '',
-              },
-              {
-                callees: '',
-              },
-            ],
-          },
-        ],
-        data: {
-          action: '',
-          data: [],
-          extra: [],
-        },
-        id: 'murder',
-        clustering: true,
-        zoomSync: true,
-        doubleClick: true,
-        grouping: true,
-        colors: {
-          text: 'initial',
-          gridLines: 'transparent',
-          groupsArea: 'initial',
-          mainBackground: 'initial',
-          topArea: 'initial',
-          itemsHighlight: '#f3ba00',
-          filterHighlighted: 'blue',
-          itemsText: 'black',
-        },
-        height: '500px',
-      },
-    },
     {
       name: 'callsDistrib',
       title: 'Calls Distribution',
@@ -186,5 +119,73 @@ export const action3 = {
       },
     },
   ],
-  availableWidgets: [],
+  availableWidgets: [
+    {
+      name: 'timeline',
+      title: 'Timeline Representation',
+      size: 75,
+      filters: {
+        annotationsActive: [],
+      },
+      order: 1,
+      datasets: ['calls'],
+      config: {
+        start: '',
+        end: '',
+        datasetsInfo: [
+          {
+            id: 'calls',
+            labels: [
+              {
+                callees: '',
+              },
+              {
+                callers: '',
+              },
+              {
+                'callers -> callees': '',
+              },
+              {
+                duration: '',
+              },
+            ],
+            legend: [
+              {
+                calls: '#ff8f77',
+              },
+            ],
+            groups: [
+              {
+                callers: '',
+              },
+              {
+                callees: '',
+              },
+            ],
+          },
+        ],
+        data: {
+          action: '',
+          data: [],
+          extra: [],
+        },
+        id: 'murder',
+        clustering: true,
+        zoomSync: true,
+        doubleClick: true,
+        grouping: true,
+        colors: {
+          text: 'initial',
+          gridLines: 'transparent',
+          groupsArea: 'initial',
+          mainBackground: 'initial',
+          topArea: 'initial',
+          itemsHighlight: '#f3ba00',
+          filterHighlighted: 'blue',
+          itemsText: 'black',
+        },
+        height: '500px',
+      },
+    },
+  ],
 };

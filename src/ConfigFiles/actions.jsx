@@ -11,14 +11,14 @@ const actions = [
     actionName: "filter interactions",
     actionDescription: "Action2 description",
     strategyId:0,
-    configFile: "default"
+    configFile: "filter_interactions"
   },
   {
     actionId: 3,
     actionName: "change date format",
     actionDescription: "Action3 description",
     strategyId:0,
-    configFile: "default"
+    configFile: "change_date_format"
   },
   {
     actionId: 4,
