@@ -1,0 +1,93 @@
+/*.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    z-index: 1001;
+    text-align: center;
+    border: 1px solid #ccc;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    height: 100%;
+  }
+*/
+.modal {
+    position: relative; /* Ajout pour permettre un positionnement absolu à l'intérieur */
+    width: 80%;
+    height: 80%; /* Takes up 80% of its parent's height */
+    border: 2px solid  #5c6ac4; /* As shown in the image */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center children horizontally */
+    align-items: center; /* Center children vertically */
+    margin: 0 20px; /* Assuming some margin is needed */
+    background-color: #ffffff;
+  }
+
+  .modal-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cancel-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    padding: 5px;
+    background-color: #f44336; /* Red color */
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%;
+  }
+
+  .options-container {
+    flex: 3;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2vw;
+  }
+  
+  .validate-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 30px;
+  }
+
+  .strategy-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .validate-button.disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    color: #666666;
+  }
+  
+  .validate-button.active {
+    background-color: #5c6ac4;
+    color: white;
+  }
+
+  .validation-button-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  

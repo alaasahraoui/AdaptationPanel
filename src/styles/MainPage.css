@@ -1,0 +1,53 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.main-content {
+  position: relative; /* This is necessary to contain the absolutely positioned modal */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+}
+
+.buttons-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 30vh;
+  width: 80vh;
+  gap: 40px;
+}
+.button {
+  padding: 20px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.request-button {
+  background-color: #5c6ac4;
+  color: white;
+}
+
+.request-button:hover {
+  background-color: #4a5ba1;
+}
+
+.reset-button {
+  background-color: #f56565;
+  color: white;
+}
+
+.reset-button:hover {
+  background-color: #c53030;
+}

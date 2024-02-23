@@ -1,16 +1,17 @@
-// NavBar.js
 import React from 'react';
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import '../styles/NavBar.css';
 
 const NavBar = () => {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6">
-          this is a nav bar 
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <header className="navBar">
+      <div className='navbar-title-container'>
+        <img src="/logo_SYMBIOTIK.png" alt="Logo" className="navbar-logo" />
+        <h1 className="navbar-title">Adaptation Panel</h1>
+      </div>
+      <FontAwesomeIcon icon={faUser} className="navbar-profile-icon" />
+    </header>
   );
 };
 
