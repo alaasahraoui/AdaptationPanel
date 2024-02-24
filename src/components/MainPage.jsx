@@ -15,28 +15,21 @@ const MainPage = () => {
     const socket = io('http://localhost:3000');
 
     socket.on('strategy', (strategyID) => {
-      setSelectedStrategy(strategyID);
-      setIsModalOpen(true);
+      if (!isModalOpen) {
+        setSelectedStrategy(strategyID);
+        setIsModalOpen(true);
+      }
     });
 
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [isModalOpen]);
 
   const handleRequestAdaptation = () => {
-    setIsModalOpen(true);
-    setTimeout(() => {
-      const randomStrategy = Math.floor(Math.random() * 3);
-      // instead of sending the strategy here, we should send a request to the RL module (or awareness module) to request an adaptation. 
-      sendStrategy(randomStrategy)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network error: ' + response.statusText);
-          }
-          return response.json();
-        })
-    }, 1000);
+    const randomStrategy = Math.floor(Math.random() * 3);
+    // instead of sending the strategy here, we should send a request to the RL module (or awareness module) to request an adaptation. 
+    sendStrategy(randomStrategy)
   };
 
   const handleCloseModal = () => {
