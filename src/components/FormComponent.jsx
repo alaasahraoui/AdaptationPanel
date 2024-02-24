@@ -1,4 +1,4 @@
-import React, { useState, useMemo,useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import actions from '../ConfigFiles/actions';
 import strategies from '../ConfigFiles/strategies';
@@ -7,55 +7,43 @@ const FormComponent = () => {
   const [selectedStrategy, setSelectedStrategy] = useState('');
   const [selectedAction, setSelectedAction] = useState('');
   const [actionConfig, setActionConfig] = useState(null);
-  // useMemo to filter actions based on the selected strategy, optimizing re-renders
-  const filteredActions = useMemo(() => actions.filter(action => 
-    action.strategyId === parseInt(selectedStrategy, 10)), [actions, selectedStrategy]);
+
+  useEffect(() => {
+    const socket = new WebSocket('ws://localhost:3000');
+
+    socket.onopen = () => {
+      console.log('WebSocket connection established');
+    };
+
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      if (message.type === 'strategyUpdate' && message.strategyId !== undefined) {
+        setSelectedStrategy(message.strategyId.toString());
+        setSelectedAction(''); // Reset action when strategy changes
+        setActionConfig(null); // Reset config if necessary
+      }
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, []);
 
   const handleStrategyChange = (e) => {
     setSelectedStrategy(e.target.value);
-    setSelectedAction(''); // Reset selected action when strategy changes
+    setSelectedAction(''); // Reset action when strategy changes
   };
 
+  // Define handleActionChange here
   const handleActionChange = (e) => {
     setSelectedAction(e.target.value);
-  
-    
-
+    // Include any additional logic for when an action is selected
   };
-  useEffect(() => {
-    if (selectedAction) {
-      // Find the action object from the actions array
-      const action = actions.find(a => `${a.actionId}` === selectedAction);
-      if (action && action.configFile !== 'default') {
-        // Dynamically import the configFile
-       
-        import(`../ConfigFiles/${action.configFile}`)
-          .then((config) => {
-            // Assuming the config exports an object or function 
-            console.log('Configuration loaded:', config.default);
-            // here we send a post request to the server to change the dashboard 
-            // based on the selected action and strategy
-            fetch('http://localhost:4200/server/updateTemplate', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(config.default)
-            });
-//------------------end of the post request to the server-------------------
 
+  // useMemo to filter actions based on the selected strategy
+  const filteredActions = useMemo(() => actions.filter(action => 
+    action.strategyId === parseInt(selectedStrategy, 10)), [actions, selectedStrategy]);
 
-
-            setActionConfig(config.default); // Save the loaded config if needed
-          })
-          .catch(err => console.error("Failed to load config:", err));
-      } else {
-        // Reset or handle the default configuration case
-        console.log('Loading default configuration or handling missing config.');
-        setActionConfig(null);
-      }
-    }
-  }, [selectedAction]);
   return (
     <div>
       <FormControl fullWidth>
@@ -67,7 +55,6 @@ const FormComponent = () => {
           onChange={handleStrategyChange}
           displayEmpty
         >
-          
           {strategies.map((strategy) => (
             <MenuItem key={strategy.strategy_id} value={strategy.strategy_id.toString()}>
               {strategy.name}
@@ -76,7 +63,6 @@ const FormComponent = () => {
         </Select>
       </FormControl>
 
-      {/* Render action dropdown only if a strategy is selected */}
       {selectedStrategy && (
         <FormControl fullWidth style={{ marginTop: '20px' }}>
           <InputLabel id="action-select-label">Action</InputLabel>
@@ -87,7 +73,6 @@ const FormComponent = () => {
             onChange={handleActionChange}
             displayEmpty
           >
-          
             {filteredActions.map((action) => (
               <MenuItem key={action.actionId} value={action.actionId.toString()}>
                 {action.actionName}
