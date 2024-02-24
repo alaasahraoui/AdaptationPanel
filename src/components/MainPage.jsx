@@ -17,6 +17,7 @@ const MainPage = () => {
     socket.on('strategy', (strategyID) => {
       if (!isModalOpen) {
         setSelectedStrategy(strategyID);
+        alert('RL module has suggested a strategy');
         setIsModalOpen(true);
       }
     });
