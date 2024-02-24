@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import '../styles/OptionCard.css';
 
-const OptionCard = ({ title, adaptations, onSee, onSelect, isSelected, isEyeActive }) => {
+const OptionCard = ({ title, adaptations, onSee, onSelect, isSelected, isEyeActive, fitnessScore ,isBestOption}) => {
+
 
   const handleClick = () => {
     onSelect();
@@ -15,7 +16,7 @@ const OptionCard = ({ title, adaptations, onSee, onSelect, isSelected, isEyeActi
   };
 
   return (
-    <div className={`option-card ${isSelected ? 'selected' : ''}`} onClick={handleClick}>
+    <div className={`option-card ${isSelected ? 'selected' : ''} ${isBestOption ? 'best-option' : ''}`} onClick={handleClick}>
       <div className="select-checkbox" onClick={(e) => {
         e.stopPropagation();
         onSelect();
@@ -31,6 +32,7 @@ const OptionCard = ({ title, adaptations, onSee, onSelect, isSelected, isEyeActi
             {adaptations.map((adaptation, index) => (
               <li key={index}>{adaptation}</li>
             ))}
+            <div style={{ marginTop: '10px' }}>{fitnessScore}%</div>
           </ul>
         </div>
         <div className='button-container'>

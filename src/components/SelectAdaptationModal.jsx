@@ -10,6 +10,7 @@ const AdaptationModal = ({ onClose, strategy  }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [activeEyeIndex, setActiveEyeIndex] = useState(null);
   const [dashboardupdated, setDashboardupdated] = useState(false);
+ 
 
   
   const availableOptions = useMemo(() => adaptations.filter(adaptation => 
@@ -30,6 +31,20 @@ const AdaptationModal = ({ onClose, strategy  }) => {
       fetchAndUpdateDashboard(currentConfig => currentConfig, false);
     }
   }, [activeEyeIndex]);
+//---------------------------------Fitness Score--------------------------------------
+const [fitnessScores, setFitnessScores] = useState([]);
+const [bestOptionIndex, setBestOptionIndex] = useState(null);
+useEffect(() => {
+  // Generate a fitness score for each available option
+  const scores = availableOptions.map(() =>
+    Math.floor(Math.random() * (100 - 50 + 1) + 50)
+  );
+  setFitnessScores(scores);
+    // Determine the index of the highest fitness score
+    const highestScoreIndex = scores.findIndex((score) => score === Math.max(...scores));
+    setBestOptionIndex(highestScoreIndex);
+}, [availableOptions]);
+//---------------------------------------------------------------------------------------
 
 
   const strategyInfo = strategies.find(elem => elem.strategy_id === strategy);
@@ -82,6 +97,8 @@ const AdaptationModal = ({ onClose, strategy  }) => {
             </div>
             <div className="options-container">
             {availableOptions.map((adaptation, index) => (
+              
+
               <OptionCard 
                 key={index}
                 title={`Option ${index + 1}`}
@@ -90,6 +107,8 @@ const AdaptationModal = ({ onClose, strategy  }) => {
                 onSelect={() => handleSelectOption(index)}
                 isSelected={selectedOption === index}
                 isEyeActive={activeEyeIndex === index}
+                fitnessScore={fitnessScores[index]}
+                isBestOption={index === bestOptionIndex ? true : false}
               />
             ))}
           </div>
