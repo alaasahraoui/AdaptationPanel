@@ -1,20 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 import NavBar from './NavBar';
 import SelectAdaptationModal from './SelectAdaptationModal';
 import {GetDefaultConfigFile, SetCurrentConfigFile} from '../API/symbiotik'
 import {UpdateDashboard} from '../API/dashboard'
+import { sendStrategy } from '../API/adaptationEngine';
 import '../styles/MainPage.css';
 
 const MainPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStrategy, setSelectedStrategy] = useState(null)
 
+  useEffect(() => {
+    const socket = io('http://localhost:3000');
+
+    socket.on('strategy', (strategyID) => {
+      setSelectedStrategy(strategyID);
+      setIsModalOpen(true);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   const handleRequestAdaptation = () => {
     setIsModalOpen(true);
     setTimeout(() => {
       const randomStrategy = Math.floor(Math.random() * 3);
-      setSelectedStrategy(randomStrategy);
-    }, 1500);
+      // instead of sending the strategy here, we should send a request to the RL module (or awareness module) to request an adaptation. 
+      sendStrategy(randomStrategy)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network error: ' + response.statusText);
+          }
+          return response.json();
+        })
+    }, 1000);
   };
 
   const handleCloseModal = () => {

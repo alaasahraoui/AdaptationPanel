@@ -6,10 +6,10 @@ export const GetCurrentConfigFile = async () => {
     return copyConfig
   };
 
-  export const GetDefaultConfigFile = async () => {
-    /* make API call here */
-    return defaultConfig
-  };
+export const GetDefaultConfigFile = async () => {
+  /* make API call here */
+  return defaultConfig
+};
 
 export const SetCurrentConfigFile = async (newConfigFile) => {
   /* make API call here */
