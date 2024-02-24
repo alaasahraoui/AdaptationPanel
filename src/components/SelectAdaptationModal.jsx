@@ -31,18 +31,15 @@ const AdaptationModal = ({ onClose, strategy  }) => {
       fetchAndUpdateDashboard(currentConfig => currentConfig, false);
     }
   }, [activeEyeIndex]);
+
 //---------------------------------Fitness Score--------------------------------------
 const [fitnessScores, setFitnessScores] = useState([]);
-const [bestOptionIndex, setBestOptionIndex] = useState(null);
 useEffect(() => {
-  // Generate a fitness score for each available option
+  // Generate a random fitness score for each available option
   const scores = availableOptions.map(() =>
     Math.floor(Math.random() * (100 - 50 + 1) + 50)
   );
   setFitnessScores(scores);
-    // Determine the index of the highest fitness score
-    const highestScoreIndex = scores.findIndex((score) => score === Math.max(...scores));
-    setBestOptionIndex(highestScoreIndex);
 }, [availableOptions]);
 //---------------------------------------------------------------------------------------
 
@@ -97,8 +94,6 @@ useEffect(() => {
             </div>
             <div className="options-container">
             {availableOptions.map((adaptation, index) => (
-              
-
               <OptionCard 
                 key={index}
                 title={`Option ${index + 1}`}
@@ -108,7 +103,7 @@ useEffect(() => {
                 isSelected={selectedOption === index}
                 isEyeActive={activeEyeIndex === index}
                 fitnessScore={fitnessScores[index]}
-                isBestOption={index === bestOptionIndex ? true : false}
+                isBestOption={index === fitnessScores.indexOf(Math.max(...fitnessScores))}
               />
             ))}
           </div>
