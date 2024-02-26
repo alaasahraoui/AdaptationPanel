@@ -11,13 +11,19 @@ const MainPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStrategy, setSelectedStrategy] = useState(null)
 
+
+
   useEffect(() => {
     const socket = io('http://localhost:3000');
 
     socket.on('strategy', (strategyID) => {
+     
       if (!isModalOpen) {
         setSelectedStrategy(strategyID);
-        alert('RL module has suggested a strategy');
+        
+          alert('RL module has suggested a strategy');
+         
+       
         setIsModalOpen(true);
       }
     });
@@ -30,11 +36,13 @@ const MainPage = () => {
   const handleRequestAdaptation = () => {
     const randomStrategy = Math.floor(Math.random() * 3);
     // instead of sending the strategy here, we should send a request to the RL module (or awareness module) to request an adaptation. 
+     
     sendStrategy(randomStrategy)
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+   
     setSelectedStrategy(null)
   };
 

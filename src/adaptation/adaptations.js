@@ -75,6 +75,25 @@ const adaptations=
             return currentConfig
         }
     },
+    {
+        actionId:5,
+        strategies:[0,1,2],
+        actionName: "adaptation 1",
+        actionDescription: "description",
+        adapt: function(currentConfig, params) {
+        
+            return currentConfig
+        }
+    },
+    {
+        actionId:6,
+        strategies:[0,1,2],
+        actionName: "adaptation 2",
+        actionDescription: "description",
+        adapt: function(currentConfig, params) {
+            return currentConfig;
+        }
+    },
   ];
   export default adaptations;
   

@@ -1,3 +1,7 @@
+//---------------------------------------------------------------------------------------------------------------
+// example of a post request to send a strategy to the client
+//curl -X POST http://localhost:3000/send-strategy -H "Content-Type: application/json" -d "{\"strategyID\":0}"
+//---------------------------------------------------------------------------------------------------------------
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -17,9 +21,11 @@ const io = socketIo(server, {
   });
 
 app.post('/send-strategy', (req, res) => {
+  console.log('Strategy sent to the client!');
   const data = req.body;
   io.sockets.emit('strategy', data.strategyID);
   res.send({ status: 'Strategy sent to the client!' });
+
 });
 
 io.on('connection', (socket) => {
