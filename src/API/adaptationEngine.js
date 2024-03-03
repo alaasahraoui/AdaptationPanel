@@ -1,4 +1,6 @@
-
+//curl -X POST http://localhost:3000/send-strategy -H "Content-Type: application/json" -d "{\"strategyID\":0}"
+//check the results here -> 
+//http://localhost:4200/fvt/assets-overview/assets-list
 const ADAPTATION_ENGINE_URL = 'http://localhost:3000';
 
 

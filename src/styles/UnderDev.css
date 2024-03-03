@@ -1,0 +1,23 @@
+
+.under-dev-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    color: #333;
+    font-family: Arial, sans-serif;
+  }
+  
+  .under-dev-container h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+  
+  .under-dev-container p {
+    font-size: 1.5em;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
