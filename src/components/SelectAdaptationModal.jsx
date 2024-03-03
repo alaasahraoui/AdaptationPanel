@@ -10,8 +10,7 @@ const AdaptationModal = ({ onClose, strategy  }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [activeEyeIndex, setActiveEyeIndex] = useState(null);
   const [dashboardupdated, setDashboardupdated] = useState(false);
- 
-
+  const [fitnessScores, setFitnessScores] = useState([]);
   
   const availableOptions = useMemo(() => adaptations.filter(adaptation => 
     adaptation.strategies.includes(parseInt(strategy, 10))), [strategy]);
@@ -28,20 +27,21 @@ const AdaptationModal = ({ onClose, strategy  }) => {
       setDashboardupdated(true)
 
     } else if (dashboardupdated) {
+      // go back to current config if activeEyeIndex is null AND if dashboard was updated before
       fetchAndUpdateDashboard(currentConfig => currentConfig, false);
+      setDashboardupdated(false)
     }
   }, [activeEyeIndex]);
 
-//---------------------------------Fitness Score--------------------------------------
-const [fitnessScores, setFitnessScores] = useState([]);
-useEffect(() => {
-  // Generate a random fitness score for each available option
-  const scores = availableOptions.map(() =>
-    Math.floor(Math.random() * (100 - 50 + 1) + 50)
-  );
-  setFitnessScores(scores);
-}, [availableOptions]);
-//---------------------------------------------------------------------------------------
+
+  useEffect(() => {
+    // Generate a random fitness score for each available option
+    const scores = availableOptions.map(() =>
+      Math.floor(Math.random() * (100 - 50 + 1) + 50)
+    );
+    setFitnessScores(scores);
+  }, [availableOptions]);
+
 
 
   const strategyInfo = strategies.find(elem => elem.strategy_id === strategy);

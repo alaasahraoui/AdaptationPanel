@@ -21,7 +21,6 @@ const io = socketIo(server, {
   });
 
 app.post('/send-strategy', (req, res) => {
-  console.log('Strategy sent to the client!');
   const data = req.body;
   io.sockets.emit('strategy', data.strategyID);
   res.send({ status: 'Strategy sent to the client!' });

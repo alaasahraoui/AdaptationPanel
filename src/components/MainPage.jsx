@@ -10,6 +10,7 @@ import '../styles/MainPage.css';
 const MainPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStrategy, setSelectedStrategy] = useState(null)
+  const [isRequestedByUser, setIsRequestedByUser] = useState(false)
 
 
 
@@ -20,10 +21,6 @@ const MainPage = () => {
      
       if (!isModalOpen) {
         setSelectedStrategy(strategyID);
-        
-          alert('RL module has suggested a strategy');
-         
-       
         setIsModalOpen(true);
       }
     });
@@ -33,16 +30,22 @@ const MainPage = () => {
     };
   }, [isModalOpen]);
 
+  useEffect(()=> {
+    if (isModalOpen && !isRequestedByUser) {
+      alert('RL module has suggested a strategy');
+    }
+  }, [isModalOpen, isRequestedByUser])
+
   const handleRequestAdaptation = () => {
     const randomStrategy = Math.floor(Math.random() * 3);
     // instead of sending the strategy here, we should send a request to the RL module (or awareness module) to request an adaptation. 
-     
+    setIsRequestedByUser(true)
     sendStrategy(randomStrategy)
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-   
+    setIsRequestedByUser(false)
     setSelectedStrategy(null)
   };
 
