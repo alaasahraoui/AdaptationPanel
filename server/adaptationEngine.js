@@ -22,7 +22,7 @@ const io = socketIo(server, {
 
 app.post('/send-strategy', (req, res) => {
   const data = req.body;
-  io.sockets.emit('strategy', data.strategyID);
+  io.sockets.emit('strategy', {strategyID: data.strategyID, unique_id: data.unique_id});
   res.send({ status: 'Strategy sent to the client!' });
 
 });

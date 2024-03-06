@@ -10,10 +10,10 @@ const OptionCard = ({ title, adaptations, onSee, onSelect, isSelected, isEyeActi
     onSelect();
   };
 
-  const handleEyeClick = (e) => {
-    e.stopPropagation();
-    onSee();
-  };
+  // const handleEyeClick = (e) => {
+  //   e.stopPropagation();
+  //   onSee();
+  // };
 
   return (
     <div className={`option-card ${isSelected ? 'selected' : ''} ${isBestOption ? 'best-option' : ''}`} onClick={handleClick}>
@@ -32,12 +32,12 @@ const OptionCard = ({ title, adaptations, onSee, onSelect, isSelected, isEyeActi
             {adaptations.map((adaptation, index) => (
               <li key={index}>{adaptation}</li>
             ))}
-            <div style={{ marginTop: '10px' }}>{fitnessScore}%</div>
+            <div style={{ marginTop: '10px' }}>{fitnessScore} %</div>
           </ul>
         </div>
-        <div className='button-container'>
+        {/* <div className='button-container'>
           <FontAwesomeIcon icon={isEyeActive ? faEyeSlash : faEye } className={`eye-icon ${isEyeActive ? 'active' : 'inactive'}`} onClick={handleEyeClick} />
-        </div>
+        </div> */}
       </div>
       
     </div>

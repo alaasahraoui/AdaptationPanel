@@ -3,35 +3,37 @@ import LoadingSpinner from './LoadingSpinner';
 import OptionCard from './OptionCard'
 import adaptations from '../adaptation/adaptations';
 import strategies  from '../adaptation/strategies';
-import {fetchAndUpdateDashboard} from '../API/dashboard'
+import { getCurrentConfig, postConfig, postOperations } from '../API/infovis_gateway';
 import '../styles/SelectAdaptationModal.css';
 
-const AdaptationModal = ({ onClose, strategy  }) => {
+const user = 'admin'
+
+const AdaptationModal = ({ onClose, strategy, unique_id  }) => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const [activeEyeIndex, setActiveEyeIndex] = useState(null);
-  const [dashboardupdated, setDashboardupdated] = useState(false);
+  // const [activeEyeIndex, setActiveEyeIndex] = useState(null);
+  // const [dashboardupdated, setDashboardupdated] = useState(false);
   const [fitnessScores, setFitnessScores] = useState([]);
   
   const availableOptions = useMemo(() => adaptations.filter(adaptation => 
     adaptation.strategies.includes(parseInt(strategy, 10))), [strategy]);
 
-  useEffect(() => {
-    if (activeEyeIndex !== null) {
-      fetchAndUpdateDashboard(config => {
-        const adaptationList = [availableOptions[activeEyeIndex]];
-        adaptationList.forEach(adaptation => {
-          config = adaptation.adapt(config, {});
-        });
-        return config;
-      }, false);
-      setDashboardupdated(true)
+  // useEffect(() => {
+  //   if (activeEyeIndex !== null) {
+  //     fetchAndUpdateDashboard(config => {
+  //       const adaptationList = [availableOptions[activeEyeIndex]];
+  //       adaptationList.forEach(adaptation => {
+  //         config = adaptation.adapt(config, {});
+  //       });
+  //       return config;
+  //     }, false);
+  //     setDashboardupdated(true)
 
-    } else if (dashboardupdated) {
-      // go back to current config if activeEyeIndex is null AND if dashboard was updated before
-      fetchAndUpdateDashboard(currentConfig => currentConfig, false);
-      setDashboardupdated(false)
-    }
-  }, [activeEyeIndex]);
+  //   } else if (dashboardupdated) {
+  //     // go back to current config if activeEyeIndex is null AND if dashboard was updated before
+  //     fetchAndUpdateDashboard(currentConfig => currentConfig, false);
+  //     setDashboardupdated(false)
+  //   }
+  // }, [activeEyeIndex]);
 
 
   useEffect(() => {
@@ -53,28 +55,45 @@ const AdaptationModal = ({ onClose, strategy  }) => {
     setSelectedOption(selectedOption === index ? null : index);
   };
 
-  const handleSeeOption = async  (index) => {
-    setActiveEyeIndex(activeEyeIndex === index ? null : index)
-  };
+  // const handleSeeOption = async  (index) => {
+  //   setActiveEyeIndex(activeEyeIndex === index ? null : index)
+  // };
 
   const handleValidate = async () => {
     if (!isButtonDisabled) {
-      fetchAndUpdateDashboard(config => {
-        const adaptationList = [availableOptions[selectedOption]];
-        adaptationList.forEach(adaptation => {
-          config = adaptation.adapt(config, {});
-        });
-        return config;
-      }, true);
+      var config = await getCurrentConfig(user)
+      const adaptationList = [availableOptions[selectedOption]];
+      adaptationList.forEach(adaptation => {
+        config = adaptation.adapt(config, {});
+      });
+      
+      const responseConfig = await postConfig(unique_id, config, user);
+      console.log(responseConfig)
+
+      const responseOperations = await postOperations(unique_id, adaptationList.map(adaptation => adaptation.actionId), user);
+      console.log(responseOperations)
+      
+
+
+      // fetchAndUpdateDashboard(config => {
+      //   const adaptationList = [availableOptions[selectedOption]];
+      //   adaptationList.forEach(adaptation => {
+      //     config = adaptation.adapt(config, {});
+      //   });
+      //   return config;
+      // }, true);
+
 
       onClose()
     }
   };
 
   const closeModal = async () => {
-    if (activeEyeIndex !== null) {
-      fetchAndUpdateDashboard(currentConfig => currentConfig, false);
-    }
+    // if (activeEyeIndex !== null) {
+    //   fetchAndUpdateDashboard(currentConfig => currentConfig, false);
+    // }
+    const responseOperations = await postOperations(unique_id, [-1], user);
+    console.log(responseOperations)
     onClose()
   };
 
@@ -98,10 +117,10 @@ const AdaptationModal = ({ onClose, strategy  }) => {
                 key={index}
                 title={`Option ${index + 1}`}
                 adaptations={[adaptation.actionName]}
-                onSee={() => handleSeeOption(index)}
+                //onSee={() => handleSeeOption(index)}
                 onSelect={() => handleSelectOption(index)}
                 isSelected={selectedOption === index}
-                isEyeActive={activeEyeIndex === index}
+                //isEyeActive={activeEyeIndex === index}
                 fitnessScore={fitnessScores[index]}
                 isBestOption={index === fitnessScores.indexOf(Math.max(...fitnessScores))}
               />
