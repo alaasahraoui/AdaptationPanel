@@ -1,0 +1,95 @@
+.option-card {
+    border: 1px solid #000000;
+    border-radius: 15px;
+    padding: 20px 10px;
+    position: relative;
+    margin-bottom: 20px;
+    height: 35vh ;
+    width: 15vw;
+  }
+  .best-option {
+    background-color: #90EE90;  
+  }
+  
+  .select-checkbox {
+    position: absolute;
+    border-radius: 50%;
+    top: 10px;
+    right: 10px;
+    height: 20px;
+    width: 20px;
+    border: 1px solid #000000;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .selected .select-checkbox {
+    background-color: #5c6ac4;
+    color: white;
+  }
+  
+  .selected {
+    border: 2px solid #5c6ac4;
+  }
+  
+  .option-card h2 {
+    margin-top: 0;
+  }
+  
+  .option-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    list-style: inside disc;
+    width: 100%;
+  }
+
+  .option-card li {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .card-content {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
+  }
+
+  .title-container {
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .list-container {
+    flex:3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+  }
+  
+  .button-container {
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .eye-icon {
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  .eye-icon.active {
+    color: #007bff;
+  }
+  
+  .eye-icon.inactive {
+    color: #6c757d; 
+  }

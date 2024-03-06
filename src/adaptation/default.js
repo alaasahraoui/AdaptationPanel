@@ -1,4 +1,4 @@
-export const action3 = {
+const defaultConfig = {
     title: 'adaptation_test',
     timewindow: [978289700000, 978310675000],
     datasets: [
@@ -188,4 +188,6 @@ export const action3 = {
     ],
     availableWidgets: [],
   };
+
+export default defaultConfig
   
