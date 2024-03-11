@@ -17,11 +17,10 @@ const MainPage = () => {
   useEffect(() => {
     const socket = io('http://localhost:3000');
 
-    socket.on('strategy', (strategyID, unique_id) => {
-     
+    socket.on('strategy', (data) => {
       if (!isModalOpen) {
-        setSelectedStrategy(strategyID);
-        setUniqueID(unique_id);
+        setSelectedStrategy(data.strategyID);
+        setUniqueID(data.unique_id);
         setIsModalOpen(true);
       }
     });
@@ -58,7 +57,6 @@ const MainPage = () => {
     //setIsRequestedByUser(false)
     setSelectedStrategy(null)
   };
-
 
   return (
     <>

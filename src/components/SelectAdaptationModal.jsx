@@ -70,7 +70,13 @@ const AdaptationModal = ({ onClose, strategy, unique_id  }) => {
       const responseConfig = await postConfig(unique_id, config, user);
       console.log(responseConfig)
 
-      const responseOperations = await postOperations(unique_id, adaptationList.map(adaptation => adaptation.actionId), user);
+      const operationList = adaptationList.map(adaptation => ({
+        adaptationName : adaptation.actionName,
+        adaptationDescription : adaptation.actionName,
+        adaptationParameters : adaptation.defaultParameters
+      }))
+
+      const responseOperations = await postOperations(unique_id, operationList, user);
       console.log(responseOperations)
       
 
@@ -92,7 +98,8 @@ const AdaptationModal = ({ onClose, strategy, unique_id  }) => {
     // if (activeEyeIndex !== null) {
     //   fetchAndUpdateDashboard(currentConfig => currentConfig, false);
     // }
-    const responseOperations = await postOperations(unique_id, [-1], user);
+    const rejectedOperation = {adaptationName: "reject", adaptationDescription: "reject adaptation", adaptationParameters: {}};
+    const responseOperations = await postOperations(unique_id, rejectedOperation, user);
     console.log(responseOperations)
     onClose()
   };

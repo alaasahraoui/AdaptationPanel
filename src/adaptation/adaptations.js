@@ -5,6 +5,7 @@ const adaptations=
         strategies:[2],
         actionName: "Remove Graph",
         actionDescription: "Hide the graph and place it in the available widgets section",
+        defaultParameters: {},
         adapt: function(currentConfig, params) {
             const index = currentConfig.currentWidgets.findIndex(widget => widget.name === 'network');
 
@@ -21,6 +22,7 @@ const adaptations=
         strategies:[2],
         actionName: "Remove Timeline",
         actionDescription: "Hide the timeline and place it in the available widgets section",
+        defaultParameters: {},
         adapt: function(currentConfig, params) {
             const index = currentConfig.currentWidgets.findIndex(widget => widget.name === 'timeline');
 
@@ -37,9 +39,13 @@ const adaptations=
         strategies:[0],
         actionName: "Filter interaction",
         actionDescription: "description",
+        defaultParameters: {
+            min: 3,
+            max: 5
+        },
         adapt: function(currentConfig, params) {
-            const minInteraction = params['min'] || 2
-            const maxInteraction = params['max'] || 5
+            const minInteraction = params['min'] || this.defaultParameters.min
+            const maxInteraction = params['max'] || this.defaultParameters.max
             currentConfig.datasets[0].localFilters.interactions = [minInteraction, maxInteraction]
             return currentConfig
         }
@@ -49,9 +55,12 @@ const adaptations=
         strategies:[0],
         actionName: "Change Date Format",
         actionDescription: "description",
+        defaultParameters: {
+            format: "HH:mm"
+        },
         adapt: function(currentConfig, params) {
             const index = currentConfig.currentWidgets.findIndex(widget => widget.name === 'callsDistrib');
-            const dateFormat = params['format'] || "HH:mm"
+            const dateFormat = params['format'] || this.defaultParameters.format
             if (index > -1) {
                 currentConfig.currentWidgets[index].config.xaxisformat = params["format"]
             }
@@ -63,6 +72,7 @@ const adaptations=
         strategies:[1],
         actionName: "Inverse Timeline and Network order",
         actionDescription: "description",
+        defaultParameters: {},
         adapt: function(currentConfig, params) {
             const indexTimeline = currentConfig.currentWidgets.findIndex(widget => widget.name === 'timeline');
             const indexNetwork = currentConfig.currentWidgets.findIndex(widget => widget.name === 'network');
@@ -80,6 +90,7 @@ const adaptations=
         strategies:[0,1,2],
         actionName: "adaptation 1",
         actionDescription: "description",
+        defaultParameters: {},
         adapt: function(currentConfig, params) {
         
             return currentConfig
@@ -90,6 +101,7 @@ const adaptations=
         strategies:[0,1,2],
         actionName: "adaptation 2",
         actionDescription: "description",
+        defaultParameters: {},
         adapt: function(currentConfig, params) {
             return currentConfig;
         }
