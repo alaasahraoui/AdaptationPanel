@@ -21,7 +21,7 @@ const INFOVIS_GATEWAY_PORT = 'port';
   
 
 
-export const postOperations = async (unique_id, opretations, user) => {
+export const postOperations = async (unique_id, operations, user) => {
   try {
     const fetchOptions = {
       method: 'POST',
@@ -31,7 +31,7 @@ export const postOperations = async (unique_id, opretations, user) => {
       body: JSON.stringify(
         {
           unique_id: unique_id,
-          opretations: opretations,
+          operations: operations,
           timestamp: Date.now(),
           user: user
         }

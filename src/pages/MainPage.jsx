@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import NavBar from './NavBar';
-import SelectAdaptationModal from './SelectAdaptationModal';
+import NavBar from '../components/NavBar';
+import SelectAdaptationModal from '../components/SelectAdaptationModal';
 // import {GetDefaultConfigFile, SetCurrentConfigFile} from '../API/infovis_gateway'
 // import {UpdateDashboard} from '../API/AVT'
 import '../styles/MainPage.css';
@@ -10,8 +10,8 @@ const MainPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStrategy, setSelectedStrategy] = useState(null)
   const [unique_id, setUniqueID] = useState(null)
+  const [user, setUser] = useState(null)
   // const [isRequestedByUser, setIsRequestedByUser] = useState(false)
-
 
 
   useEffect(() => {
@@ -22,6 +22,7 @@ const MainPage = () => {
         setSelectedStrategy(data.strategyID);
         setUniqueID(data.unique_id);
         setIsModalOpen(true);
+        setUser(data.user)
       }
     });
 
@@ -56,6 +57,7 @@ const MainPage = () => {
     setIsModalOpen(false);
     //setIsRequestedByUser(false)
     setSelectedStrategy(null)
+    setUniqueID(null)
   };
 
   return (
@@ -70,7 +72,7 @@ const MainPage = () => {
             Reset Dashboard
           </button>
         </div>*/} 
-        {isModalOpen && <SelectAdaptationModal onClose={handleCloseModal} strategy={selectedStrategy} unique_id={unique_id} />}
+        {isModalOpen && <SelectAdaptationModal onClose={handleCloseModal} strategy={selectedStrategy} unique_id={unique_id} user={user} />}
       </div>
     </>
   );

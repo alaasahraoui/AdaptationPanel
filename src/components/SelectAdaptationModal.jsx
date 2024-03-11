@@ -6,34 +6,39 @@ import strategies  from '../adaptation/strategies';
 import { getCurrentConfig, postConfig, postOperations } from '../API/infovis_gateway';
 import '../styles/SelectAdaptationModal.css';
 
-const user = 'admin'
 
-const AdaptationModal = ({ onClose, strategy, unique_id  }) => {
+const AdaptationModal = ({ onClose, strategy, unique_id, user  }) => {
   const [selectedOption, setSelectedOption] = useState(null);
-  // const [activeEyeIndex, setActiveEyeIndex] = useState(null);
+  const [activeEyeIndex, setActiveEyeIndex] = useState(null);
+  const [initialConfig, setInitialConfig] = useState(null)
   // const [dashboardupdated, setDashboardupdated] = useState(false);
   const [fitnessScores, setFitnessScores] = useState([]);
   
   const availableOptions = useMemo(() => adaptations.filter(adaptation => 
     adaptation.strategies.includes(parseInt(strategy, 10))), [strategy]);
 
-  // useEffect(() => {
-  //   if (activeEyeIndex !== null) {
-  //     fetchAndUpdateDashboard(config => {
-  //       const adaptationList = [availableOptions[activeEyeIndex]];
-  //       adaptationList.forEach(adaptation => {
-  //         config = adaptation.adapt(config, {});
-  //       });
-  //       return config;
-  //     }, false);
-  //     setDashboardupdated(true)
+  useEffect(() => {
+    getCurrentConfig(user)
+      .then(config => setInitialConfig(config))
+  }, []);
 
-  //   } else if (dashboardupdated) {
-  //     // go back to current config if activeEyeIndex is null AND if dashboard was updated before
-  //     fetchAndUpdateDashboard(currentConfig => currentConfig, false);
-  //     setDashboardupdated(false)
-  //   }
-  // }, [activeEyeIndex]);
+  useEffect(() => {
+    if (activeEyeIndex !== null) {
+      var config = JSON.parse(JSON.stringify(initialConfig))
+      const adaptationList = [availableOptions[activeEyeIndex]];
+      adaptationList.forEach(adaptation => {
+        config = adaptation.adapt(config, {});
+      });
+      
+      postConfig(unique_id, config, user);
+      setDashboardupdated(true)
+
+    } else if (dashboardupdated) {
+      // go back to initial config if activeEyeIndex is null AND if dashboard was updated before
+      postConfig(unique_id, initialConfig, user);
+      setDashboardupdated(false)
+    }
+  }, [activeEyeIndex]);
 
 
   useEffect(() => {
@@ -55,13 +60,13 @@ const AdaptationModal = ({ onClose, strategy, unique_id  }) => {
     setSelectedOption(selectedOption === index ? null : index);
   };
 
-  // const handleSeeOption = async  (index) => {
-  //   setActiveEyeIndex(activeEyeIndex === index ? null : index)
-  // };
+  const handleSeeOption = async  (index) => {
+    setActiveEyeIndex(activeEyeIndex === index ? null : index)
+  };
 
   const handleValidate = async () => {
     if (!isButtonDisabled) {
-      var config = await getCurrentConfig(user)
+      var config = JSON.parse(JSON.stringify(initialConfig))
       const adaptationList = [availableOptions[selectedOption]];
       adaptationList.forEach(adaptation => {
         config = adaptation.adapt(config, {});
@@ -124,10 +129,10 @@ const AdaptationModal = ({ onClose, strategy, unique_id  }) => {
                 key={index}
                 title={`Option ${index + 1}`}
                 adaptations={[adaptation.actionName]}
-                //onSee={() => handleSeeOption(index)}
+                onSee={() => handleSeeOption(index)}
                 onSelect={() => handleSelectOption(index)}
                 isSelected={selectedOption === index}
-                //isEyeActive={activeEyeIndex === index}
+                isEyeActive={activeEyeIndex === index}
                 fitnessScore={fitnessScores[index]}
                 isBestOption={index === fitnessScores.indexOf(Math.max(...fitnessScores))}
               />
