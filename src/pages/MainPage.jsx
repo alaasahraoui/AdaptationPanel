@@ -19,6 +19,7 @@ const MainPage = () => {
 
     socket.on('strategy', (data) => {
       if (!isModalOpen) {
+        alert('RL module has suggested a strategy');
         setSelectedStrategy(data.strategyID);
         setUniqueID(data.unique_id);
         setIsModalOpen(true);
@@ -31,11 +32,11 @@ const MainPage = () => {
     };
   }, [isModalOpen]);
 
-  useEffect(()=> {
-    if (isModalOpen /* && !isRequestedByUser */) {
-      alert('RL module has suggested a strategy');
-    }
-  }, [isModalOpen, /*isRequestedByUser*/])
+  // useEffect(()=> {
+  //   if (isModalOpen /* && !isRequestedByUser */) {
+  //     alert('RL module has suggested a strategy');
+  //   }
+  // }, [isModalOpen, /*isRequestedByUser*/])
 
   /*
   const handleRequestAdaptation = () => {

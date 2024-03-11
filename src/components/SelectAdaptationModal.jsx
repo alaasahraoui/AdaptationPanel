@@ -11,7 +11,7 @@ const AdaptationModal = ({ onClose, strategy, unique_id, user  }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [activeEyeIndex, setActiveEyeIndex] = useState(null);
   const [initialConfig, setInitialConfig] = useState(null)
-  // const [dashboardupdated, setDashboardupdated] = useState(false);
+  const [dashboardupdated, setDashboardupdated] = useState(false);
   const [fitnessScores, setFitnessScores] = useState([]);
   
   const availableOptions = useMemo(() => adaptations.filter(adaptation => 
