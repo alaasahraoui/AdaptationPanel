@@ -15,7 +15,10 @@ const MainPage = () => {
 
 
   useEffect(() => {
-    const socket = io(import.meta.env.VITE_ENGINE_SERV);
+
+    //this is how socket can listen on servers that run under paths
+    const socket = io(import.meta.env.VITE_ENGINE_SERV , {path: '/server_engine/socket.io'});
+
 
     socket.on('strategy', (data) => {
       if (!isModalOpen) {
