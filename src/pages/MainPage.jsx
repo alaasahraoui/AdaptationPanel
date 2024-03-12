@@ -15,7 +15,7 @@ const MainPage = () => {
 
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
+    const socket = io(import.meta.env.VITE_ENGINE_SERV);
 
     socket.on('strategy', (data) => {
       if (!isModalOpen) {

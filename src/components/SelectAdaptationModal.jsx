@@ -30,7 +30,10 @@ const AdaptationModal = ({ onClose, strategy, unique_id, user  }) => {
         config = adaptation.adapt(config, {});
       });
       
-      postConfig(unique_id, config, user);
+      //set temporal title when the user is testing adaptations
+      let tempConfig = JSON.parse(JSON.stringify(config))
+      tempConfig.title = tempConfig.title + activeEyeIndex
+      postConfig(unique_id, tempConfig, user);
       setDashboardupdated(true)
 
     } else if (dashboardupdated) {
@@ -72,6 +75,8 @@ const AdaptationModal = ({ onClose, strategy, unique_id, user  }) => {
         config = adaptation.adapt(config, {});
       });
       
+      //each time user validates or rejects, set a new "unique" title
+      config.title = config.title + unique_id;
       const responseConfig = await postConfig(unique_id, config, user);
       console.log(responseConfig)
 
