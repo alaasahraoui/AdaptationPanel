@@ -22,12 +22,7 @@ const port = process.env.PORT;
 const server = http.createServer(app);
 server.listen(port, () => console.log(`Adapt Engine server running on port ${port}`));
 
-const io = socketIo(server, {
-    cors: {
-      origin: process.env.PANEL_URI,
-      methods: ["POST"]
-    }
-  });
+const io = socketIo(server);
 
 
 app.get("/", (req, res) => {
@@ -37,7 +32,7 @@ app.get("/", (req, res) => {
 
 app.post('/forwardStrategy', (req, res) => {
   const data = req.body;
-  io.sockets.emit('strategy', {strategyID: data.strategy_id, unique_id: data.unique_id, user: data.user});
+  io.emit('strategy', {strategyID: data.strategy_id, unique_id: data.unique_id, user: data.user});
   res.send({ status: 'Strategy sent to the Panel!' });
 
 });
