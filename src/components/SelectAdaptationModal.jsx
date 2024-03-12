@@ -108,7 +108,7 @@ const AdaptationModal = ({ onClose, strategy, unique_id, user  }) => {
     // if (activeEyeIndex !== null) {
     //   fetchAndUpdateDashboard(currentConfig => currentConfig, false);
     // }
-    const rejectedOperation = {adaptationName: "reject", adaptationDescription: "reject adaptation", adaptationParameters: {}};
+    const rejectedOperation = [{adaptationName: "reject", adaptationDescription: "reject adaptation", adaptationParameters: {}}];
     const responseOperations = await postOperations(unique_id, rejectedOperation, user);
     console.log(responseOperations)
     onClose()
