@@ -1,6 +1,6 @@
 //---------------------------------------------------------------------------------------------------------------
 // example of a post request to send a strategy to the client
-//curl -X POST http://localhost:3000/postStrategy -H "Content-Type: application/json" -d "{\"strategy_id\":0, \"unique_id\":0, \"user\":\"admin\""}"
+//curl -X POST http://localhost:3000/forwardStrategy -H "Content-Type: application/json" -d "{\"strategy_id\":0, \"unique_id\":0, \"user\":\"admin\""}"
 //---------------------------------------------------------------------------------------------------------------
 const express = require('express');
 const http = require('http');
@@ -9,30 +9,44 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
+
+//for env variables read-load
+const dotenv = require('dotenv');
+dotenv.config();
+
 app.use(bodyParser.json());
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors());
+
+const port = process.env.PORT;
 
 const server = http.createServer(app);
+server.listen(port, () => console.log(`Adapt Engine server running on port ${port}`));
+
 const io = socketIo(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: process.env.PANEL_URI,
       methods: ["POST"]
     }
   });
 
-app.post('/postStrategy', (req, res) => {
+
+app.get("/", (req, res) => {
+  res.json("Hello World @ Adaptation Engine");
+});
+  
+
+app.post('/forwardStrategy', (req, res) => {
   const data = req.body;
   io.sockets.emit('strategy', {strategyID: data.strategy_id, unique_id: data.unique_id, user: data.user});
-  res.send({ status: 'Strategy sent to the client!' });
+  res.send({ status: 'Strategy sent to the Panel!' });
 
 });
 
 io.on('connection', (socket) => {
-  console.log('New client connected');
+  console.log('New client connected to Adapt Engine');
   socket.on('disconnect', () => {
-    console.log('Client disconnected');
+    console.log('Client disconnected from Adapt Engine');
   });
 });
 
-const port = 3000;
-server.listen(port, () => console.log(`Server running on port ${port}`));
+
