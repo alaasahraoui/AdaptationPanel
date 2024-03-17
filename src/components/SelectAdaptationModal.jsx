@@ -5,7 +5,7 @@ import adaptations from '../adaptation/adaptations';
 import strategies from '../adaptation/strategies';
 import { getCurrentConfig, postConfig, postOperations } from '../API/infovis_gateway';
 import '../styles/SelectAdaptationModal.css';
-
+import Button from '@mui/material/Button'; // Importing Button from Material-UI
 const AdaptationModal = ({ onClose, strategy, unique_id, user }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [activeEyeIndex, setActiveEyeIndex] = useState(null);
@@ -110,19 +110,17 @@ const AdaptationModal = ({ onClose, strategy, unique_id, user }) => {
           ))}
         </div>
         <div className='validation-button-container'>
-          <button 
-            className="close-button"
-            onClick={closeModal}
-          >
-            Cancel
-          </button>
-          <button
+          <Button
             className={`validate-button ${isButtonDisabled ? 'disabled' : 'active'}`}
             onClick={handleValidate}
             disabled={isButtonDisabled}
+            variant='contained'
+            color='primary'
+ 
           >
             VALIDATE
-          </button>
+          </Button>
+          <Button variant="outlined" color="error" onClick={closeModal}>Cancel</Button>
         </div>
       </div>
     </div>
