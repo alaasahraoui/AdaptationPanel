@@ -95,3 +95,33 @@
   /* Optional: If you have specific styles for .disabled or .active, consider adding similar styles for .close-button if needed */
   
   
+  .validation-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .close-button, .validate-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    margin: 10px; /* Adjust as needed */
+  }
+  
+  .close-button {
+    background-color: #f44336;  
+    color: white;
+  }
+  
+  .close-button:hover {
+    background-color: #d32f2f;  
+  }
+  
+ 
+  
+  .validate-button.disabled {
+    background-color: #ccc; /* Example disabled style, adjust as needed */
+  }
+  
