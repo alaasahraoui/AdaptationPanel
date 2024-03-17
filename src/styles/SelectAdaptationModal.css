@@ -31,19 +31,7 @@
     display: flex;
     flex-direction: column;
   }
-
-  .cancel-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    padding: 5px;
-    background-color: #f44336; /* Red color */
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 50%;
-  }
+ 
 
   .options-container {
     flex: 3;
@@ -89,5 +77,21 @@
     align-items: center;
   }
   
+  .close-button {
+    background-color: #f44336; /* Red color, change as needed */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px; /* Adjust spacing between buttons */
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px; /* Assuming rounded corners */
+  }
+  
+  .close-button:hover {
+    background-color: #d32f2f; /* Darker shade for hover, adjust as needed */
+  }
+  
+  /* Optional: If you have specific styles for .disabled or .active, consider adding similar styles for .close-button if needed */
   
   

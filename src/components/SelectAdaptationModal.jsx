@@ -147,6 +147,15 @@ const AdaptationModal = ({ onClose, strategy, unique_id, user  }) => {
                 VALIDATE
               </button>
             </div>
+            <div className='validation-button-container'>
+              <button 
+                className={`close-button`}
+                onClick={closeModal}
+                 
+              >
+                Cancel
+              </button>
+            </div>
           </div>
           
         </>
