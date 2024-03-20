@@ -11,12 +11,10 @@ const App = () => {
       <Router>
       <Routes>
         
-        <Route path="/auth" element={<AuthPage />} /> 
-        <Route path="/signup" element={<UnderDev />} /> 
-         
+ 
         <Route path="/MainPage" element={<MainPage />} />
 
-        <Route path="/" element={<Navigate replace to="/auth" />}  />
+        <Route path="/" element={<Navigate replace to="/MainPage" />}  />
       </Routes>
     </Router>
     </>
