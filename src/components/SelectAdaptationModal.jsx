@@ -5,7 +5,7 @@ import adaptations from '../adaptation/adaptations';
 import strategies  from '../adaptation/strategies';
 import { getCurrentConfig, postConfig, postOperations } from '../API/infovis_gateway';
 import '../styles/SelectAdaptationModal.css';
-
+import Button from '@mui/material/Button'; // Importing Button from Material-UI
 
 const AdaptationModal = ({ onClose, strategy, unique_id, user  }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -117,45 +117,39 @@ const AdaptationModal = ({ onClose, strategy, unique_id, user  }) => {
 
   return (
     <div className="modal">
-      <div className="cancel-button" onClick={closeModal}>
-        X
+      <div className='modal-content'>
+        <div className='strategy-container'>
+          <h1>Selected Strategy: {strategyInfo.name}</h1>
+        </div>
+        <div className="options-container">
+          {availableOptions.map((adaptation, index) => (
+            <OptionCard
+              key={index}
+              title={`Option ${index + 1}`}
+              adaptations={[adaptation.actionName]}
+              onSee={() => handleSeeOption(index)}
+              onSelect={() => handleSelectOption(index)}
+              isSelected={selectedOption === index}
+              isEyeActive={activeEyeIndex === index}
+              fitnessScore={fitnessScores[index]}
+              isBestOption={index === fitnessScores.indexOf(Math.max(...fitnessScores))}
+            />
+          ))}
+        </div>
+        <div className='validation-button-container'>
+          <Button
+            className={`validate-button ${isButtonDisabled ? 'disabled' : 'active'}`}
+            onClick={handleValidate}
+            disabled={isButtonDisabled}
+            variant='contained'
+            color='primary'
+ 
+          >
+            VALIDATE
+          </Button>
+          <Button variant="outlined" color="error" onClick={closeModal}>Cancel</Button>
+        </div>
       </div>
-      {strategy === null ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <div className='modal-content'>
-            <div className='strategy-container'>
-              <h1>Selected Strategy: {strategyInfo.name}</h1>
-            </div>
-            <div className="options-container">
-            {availableOptions.map((adaptation, index) => (
-              <OptionCard 
-                key={index}
-                title={`Option ${index + 1}`}
-                adaptations={[adaptation.actionName]}
-                onSee={() => handleSeeOption(index)}
-                onSelect={() => handleSelectOption(index)}
-                isSelected={selectedOption === index}
-                isEyeActive={activeEyeIndex === index}
-                fitnessScore={fitnessScores[index]}
-                isBestOption={index === fitnessScores.indexOf(Math.max(...fitnessScores))}
-              />
-            ))}
-          </div>
-            <div className='validation-button-container'>
-              <button 
-                className={`validate-button ${isButtonDisabled ? 'disabled' : 'active'}`}
-                onClick={handleValidate}
-                disabled={isButtonDisabled}
-              >
-                VALIDATE
-              </button>
-            </div>
-          </div>
-          
-        </>
-      )}
     </div>
   );
 };
